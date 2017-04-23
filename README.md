@@ -11,5 +11,18 @@
 - MongoDB
 - Wildfly 10
 
-## Features
+### Features
 - Entities mapped using Morphia 1.3.2
+
+## Settings
+`/resources/config.properties`
+
+```properties
+# DATABASE
+database.URI=mongodb://localhost
+database.name=decora_teste
+
+# ADMIN USER
+admin.username=admin
+admin.password=12345
+```
