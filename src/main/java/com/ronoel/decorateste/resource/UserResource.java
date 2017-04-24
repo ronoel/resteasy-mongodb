@@ -7,6 +7,7 @@ package com.ronoel.decorateste.resource;
 
 import com.ronoel.decorateste.bean.UserBean;
 import com.ronoel.decorateste.entity.UserEntity;
+import java.security.Principal;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
@@ -23,6 +24,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 /**
  * REST Web Service
@@ -85,7 +87,13 @@ public class UserResource {
     @DELETE
     @Path("{username}")
     public Response delete(
-            @PathParam("username") String username ) throws Exception {
+            @PathParam("username") String username,
+            @Context SecurityContext securityContext) throws Exception {
+        
+        Principal principal = securityContext.getUserPrincipal();
+        if(principal.getName().equals(username)){
+            return Response.status(403).build();
+        }
 
         this.userBean.remove(username);
                 
