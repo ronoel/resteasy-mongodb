@@ -29,3 +29,5 @@ admin.password=123456
 # CLIENT APP
 client.origin=http://localhost:5555
 ```
+**NOTE: [Client App](https://github.com/ronoel/angular4-usermanager).**
+
