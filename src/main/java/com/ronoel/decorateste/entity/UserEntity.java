@@ -5,7 +5,7 @@
  */
 package com.ronoel.decorateste.entity;
 
-import com.ronoel.decorateste.util.CipherPassword;
+import com.ronoel.decorateste.util.CipherGaias;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -105,7 +105,7 @@ public class UserEntity implements Serializable {
     private void encryptPassword() {
         
         try {
-            this.passwordciphered = CipherPassword.encrypt(this.password);
+            this.passwordciphered = CipherGaias.encrypt(this.password);
         } catch (Exception ex) {
             Logger.getLogger(UserEntity.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -121,11 +121,17 @@ public class UserEntity implements Serializable {
         
         String encryptedPassword;
         try {
-            encryptedPassword = CipherPassword.encrypt(password);
+            encryptedPassword = CipherGaias.encrypt(password);
+//            LOG.log(Level.WARNING, "CHECK PASSWORD: {0} <--> {1}", new Object[]{encryptedPassword, this.passwordciphered});
             return this.passwordciphered.equals(encryptedPassword);
         } catch (Exception ex) {
-            Logger.getLogger(UserEntity.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return false;
     }
+    
+    
+    private static final Logger LOG = Logger.getLogger(UserEntity.class.getName());
+    
+    
 }

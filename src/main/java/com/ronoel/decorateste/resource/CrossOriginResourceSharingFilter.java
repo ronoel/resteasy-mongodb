@@ -5,6 +5,8 @@
  */
 package com.ronoel.decorateste.resource;
 
+import com.ronoel.decorateste.config.Config;
+import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
@@ -16,12 +18,18 @@ import javax.ws.rs.ext.Provider;
  */
 @Provider
 public class CrossOriginResourceSharingFilter implements ContainerResponseFilter {
+    
+    @Inject
+    Config config;
 
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext response) {
-        response.getHeaders().putSingle("Access-Control-Allow-Origin", "*");
+
+        response.getHeaders().putSingle("Access-Control-Allow-Origin", this.config.getProperty("client.origin"));
         response.getHeaders().putSingle("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, DELETE");
-        response.getHeaders().putSingle("Access-Control-Allow-Headers", "Content-Type");
+        response.getHeaders().putSingle("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Cookie");
+        response.getHeaders().putSingle("Access-Control-Allow-Credentials", true); 
     }
+    
     
 }

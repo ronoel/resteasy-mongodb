@@ -8,6 +8,7 @@ package com.ronoel.decorateste.resource;
 import com.ronoel.decorateste.bean.UserBean;
 import com.ronoel.decorateste.entity.UserEntity;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.validation.Valid;
 import javax.ws.rs.core.Context;
@@ -43,7 +44,7 @@ public class UserResource {
     public UserResource() {
     }
 
-    
+    @RolesAllowed({UserEntity.ROLE_ADMIN,UserEntity.ROLE_USER})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<UserEntity> getAll() {
@@ -52,6 +53,7 @@ public class UserResource {
         return users;
     }
     
+    @RolesAllowed({UserEntity.ROLE_ADMIN,UserEntity.ROLE_USER})
     @GET
     @Path("{username}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -60,7 +62,7 @@ public class UserResource {
         return this.userBean.get(username);
     }
     
-    
+    @RolesAllowed(UserEntity.ROLE_ADMIN)
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response save( @Valid UserEntity user) throws Exception {
@@ -70,7 +72,7 @@ public class UserResource {
         
     }
 
-    
+    @RolesAllowed(UserEntity.ROLE_ADMIN)
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response update( @Valid UserEntity user ) throws Exception {
@@ -79,7 +81,7 @@ public class UserResource {
         return Response.status(200).build();
     }
     
-    
+    @RolesAllowed(UserEntity.ROLE_ADMIN)
     @DELETE
     @Path("{username}")
     public Response delete(

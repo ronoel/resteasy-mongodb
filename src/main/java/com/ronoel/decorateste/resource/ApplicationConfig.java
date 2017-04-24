@@ -29,6 +29,8 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(com.ronoel.decorateste.auth.AuthInterceptor.class);
+        resources.add(com.ronoel.decorateste.resource.AuthResource.class);
         resources.add(com.ronoel.decorateste.resource.CrossOriginResourceSharingFilter.class);
         resources.add(com.ronoel.decorateste.resource.UserResource.class);
         resources.add(com.ronoel.decorateste.resource.exception.UserExistsExceptionWeb.class);

@@ -10,7 +10,7 @@ import org.apache.commons.codec.binary.Base64;
 /**
  * @author Ronoel Jr.
  */
-public class CipherPassword {
+public class CipherGaias {
 
     private static byte[] linebreak = {}; // Remove Base64 encoder default linebreak
     private static String secret = "alea6eofg45k53at"; // secret key length must be 16
@@ -35,6 +35,16 @@ public class CipherPassword {
         return new String(coder.encode(cipherText));
     }
     
-    private static final Logger LOG = Logger.getLogger(CipherPassword.class.getName());
+    public static synchronized String decrypt(String codedText)
+            throws Exception {
+        LOG.log(Level.INFO, "CodedText:{0}", codedText);
+        byte[] encrypted = coder.decode(codedText.getBytes());
+        LOG.log(Level.INFO, "Encrypted:{0}", encrypted);
+        cipher.init(Cipher.DECRYPT_MODE, key);
+        byte[] decrypted = cipher.doFinal(encrypted);
+        return new String(decrypted);
+    }
+    
+    private static final Logger LOG = Logger.getLogger(CipherGaias.class.getName());
 
 }
