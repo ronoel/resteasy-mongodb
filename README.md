@@ -2,7 +2,7 @@
 
 
 ### IDE
-- Netbeans 8.2
+- Netbeans 8.2 (Maven Project)
 
 
 ### Requirements
@@ -24,5 +24,8 @@ database.name=decora_teste
 
 # ADMIN USER
 admin.username=admin
-admin.password=12345
+admin.password=123456
+
+# CLIENT APP
+client.origin=http://localhost:5555
 ```
