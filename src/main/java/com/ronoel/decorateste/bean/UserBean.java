@@ -29,8 +29,8 @@ public class UserBean {
     private Datastore datastore;
 
     public void save(UserEntity usuario) throws UserExistsException, Exception {
-        
-        if(this.get(usuario.getUsername())!=null){
+
+        if (this.get(usuario.getUsername()) != null) {
             throw new UserExistsException();
         }
 
@@ -45,12 +45,10 @@ public class UserBean {
         }
 
     }
-    
-    
-    
+
     public void update(UserEntity usuario) throws UserNotExistException, Exception {
-        
-        if(this.get(usuario.getUsername())==null){
+
+        if (this.get(usuario.getUsername()) == null) {
             throw new UserNotExistException();
         }
 
@@ -66,15 +64,23 @@ public class UserBean {
 
     }
 
-    public List<UserEntity> getAll() {
-
+    public List<UserEntity> getAll(String filter) {
+        
+        List<UserEntity> usuarios;
+                
         Query<UserEntity> query = this.datastore.createQuery(UserEntity.class);
-        List<UserEntity> usuarios = query.asList();
+        
+        if(filter!=null && !filter.isEmpty()){
+            usuarios = query.search(filter)
+                .order("username")
+                .asList();
+        } else {
+            usuarios = query.asList();
+        }
 
         return usuarios;
     }
 
-    
     public UserEntity get(String username) {
 
         UserEntity user = this.datastore.get(UserEntity.class, username);
@@ -85,24 +91,22 @@ public class UserBean {
         return user;
     }
 
-    
     public void remove(String username) {
 
         UserEntity user = this.get(username);
         if (user != null) {
             this.datastore.delete(user);
         }
-        
+
     }
-    
-    
-    public UserEntity getByUsernamePassword(String username, String password){
-        
+
+    public UserEntity getByUsernamePassword(String username, String password) {
+
         UserEntity user = this.get(username);
-        if(user.checkPassword(password)){
+        if (user.checkPassword(password)) {
             return user;
         }
-        
+
         return null;
     }
 

@@ -18,17 +18,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
 import org.mongodb.morphia.annotations.PreLoad;
 import org.mongodb.morphia.annotations.PrePersist;
 import org.mongodb.morphia.annotations.Property;
 import org.mongodb.morphia.annotations.Transient;
+import org.mongodb.morphia.utils.IndexType;
 
 /**
  *
  * @author ronoel
  */
 @Entity("user")
+@Indexes(@Index(fields = @Field(value = "$**", type = IndexType.TEXT)))
 @XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.NONE)
 public class UserEntity implements Serializable {
